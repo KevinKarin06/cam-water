@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
-import { employees, teams } from './utils/constants';
+import { employees, teamMembers, teams } from './utils/constants';
 
 @Injectable()
 export class AppService {
@@ -41,6 +41,23 @@ export class AppService {
             data: {
               name: employee.name,
               phone: employee.phone,
+            },
+          });
+        }
+      }
+
+      for (const tM of teamMembers) {
+        const t = await this.prismaService.employeesOnTeams.findUnique({
+          where: {
+            teamId_employeeId: { employeeId: tM.employeeId, teamId: tM.teamId },
+          },
+        });
+
+        if (!t) {
+          await this.prismaService.employeesOnTeams.create({
+            data: {
+              teamId: tM.teamId,
+              employeeId: tM.employeeId,
             },
           });
         }

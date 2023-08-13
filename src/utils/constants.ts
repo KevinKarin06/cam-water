@@ -94,3 +94,16 @@ export const employees = [
     phone: '666-777-8888',
   },
 ];
+
+export const teamMembers = [
+  { teamId: 1, employeeId: 1 },
+  { teamId: 1, employeeId: 3 },
+  { teamId: 1, employeeId: 3 },
+  { teamId: 1, employeeId: 1 },
+  { teamId: 2, employeeId: 2 },
+  { teamId: 2, employeeId: 6 },
+  { teamId: 2, employeeId: 7 },
+  { teamId: 6, employeeId: 9 },
+  { teamId: 6, employeeId: 1 },
+  { teamId: 6, employeeId: 8 },
+];
