@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Team {
+  id               Int                @id @default(autoincrement())
+  name             String
+  archive          Boolean            @default(false)
+  Post             Post[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  employeesOnTeams EmployeesOnTeams[]
+}
+
+model Employee {
+  id               Int                @id @default(autoincrement())
+  name             String
+  phone            String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  employeesOnTeams EmployeesOnTeams[]
+}
+
+model EmployeesOnTeams {
+  employee   Employee @relation(fields: [employeeId], references: [id])
+  team       Team     @relation(fields: [teamId], references: [id])
+  leader     Boolean  @default(false)
+  employeeId Int
+  teamId     Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@id([teamId, employeeId])
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  latitude    String
+  longitude   String
+  priority    String
+  description String?  @db.MediumText
+  deviceId    String?
+  status      String?
+  images      Json?    @default("[]")
+  team        Team?    @relation(fields: [teamId], references: [id])
+  teamId      Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
