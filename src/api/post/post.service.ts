@@ -159,7 +159,7 @@ export class PostService {
 
       const similarPosts = await this.prismaService.$queryRaw`
       SELECT *
-      FROM post
+      FROM Post
       WHERE ST_Distance_Sphere(
         point(latitude, longitude),
         point(${post.latitude}, ${post.longitude})
