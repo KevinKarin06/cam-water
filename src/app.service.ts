@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma/prisma.service';
-import { employees, teamMembers, teams } from './utils/constants';
+import { employees, teamMembers, teams, users } from './utils/constants';
 
 @Injectable()
 export class AppService {
@@ -16,6 +16,22 @@ export class AppService {
 
   private async initDemoData() {
     try {
+      for (const user of users) {
+        const t = await this.prismaService.user.findFirst({
+          where: { name: user.name },
+        });
+
+        if (!t) {
+          await this.prismaService.user.create({
+            data: {
+              name: user.name,
+              phone: user.phone,
+              deviceId: user.deviceId,
+            },
+          });
+        }
+      }
+
       for (const team of teams) {
         const t = await this.prismaService.team.findFirst({
           where: { name: team.name },

@@ -10,6 +10,7 @@ import {
 } from 'src/utils/helpers';
 import { CustomLogger } from 'src/utils/logger';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { title } from 'process';
 
 @Injectable()
 export class PostService {
@@ -39,10 +40,11 @@ export class PostService {
 
       response.data = await this.prismaService.post.create({
         data: {
+          title: data.title,
           images: postImages,
           latitude: data.latitude,
           longitude: data.longitude,
-          priority: data.priority,
+          gravityLevel: data.gravityLevel,
           description: data.description,
           deviceId: data.deviceId,
         },
@@ -77,7 +79,16 @@ export class PostService {
       return response;
     }
 
-    //validate teamId if present
+    if (data.teamId) {
+      const team = await this.prismaService.team.findUnique({
+        where: { id: +data.teamId },
+      });
+
+      if (!team) {
+        setErrorResponse(response, 'Unknown team id', 400);
+        return response;
+      }
+    }
 
     const postImages = [];
     try {
@@ -97,7 +108,7 @@ export class PostService {
         data: {
           images: [...uniquImages],
           status: data.status,
-          teamId: +data.teamId,
+          teamId: data.teamId ? +data.teamId : data.teamId,
         },
       });
     } catch (error) {
@@ -158,7 +169,10 @@ export class PostService {
       }
 
       const similarPosts = await this.prismaService.$queryRaw`
-      SELECT *
+      SELECT *, ST_Distance_Sphere(
+        point(latitude, longitude),
+        point(${post.latitude}, ${post.longitude})
+      ) as distance
       FROM Post
       WHERE ST_Distance_Sphere(
         point(latitude, longitude),

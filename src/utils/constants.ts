@@ -107,3 +107,56 @@ export const teamMembers = [
   { teamId: 6, employeeId: 1 },
   { teamId: 6, employeeId: 8 },
 ];
+
+export const users = [
+  {
+    name: 'Alice Smith',
+    phone: '555-123-4567',
+    deviceId: '123456789012345',
+  },
+  {
+    name: 'Bob Johnson',
+    phone: '555-987-6543',
+    deviceId: '234567890123456',
+  },
+  {
+    name: 'Charlie Brown',
+    phone: '555-555-5555',
+    deviceId: '345678901234567',
+  },
+  {
+    name: 'David Wilson',
+    phone: '555-222-3333',
+    deviceId: '456789012345678',
+  },
+  {
+    name: 'Eva Davis',
+    phone: '555-777-8888',
+    deviceId: '567890123456789',
+  },
+  {
+    name: 'Frank White',
+    phone: '555-444-5555',
+    deviceId: '678901234567890',
+  },
+  {
+    name: 'Grace Lee',
+    phone: '555-999-1111',
+    deviceId: '789012345678901',
+  },
+  {
+    name: 'Hannah Taylor',
+    phone: '555-666-7777',
+    deviceId: '890123456789012',
+  },
+  {
+    name: 'Isaac Martinez',
+    phone: '555-333-2222',
+    deviceId: '901234567890123',
+  },
+  {
+    name: 'Jackie Anderson',
+    phone: '555-888-9999',
+    deviceId: '012345678901234',
+  },
+];

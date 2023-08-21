@@ -8,6 +8,7 @@ import { EmployeeModule } from './api/employee/employee.module';
 import { PostModule } from './api/post/post.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { UserModule } from './api/user/user.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     TeamsModule,
     EmployeeModule,
     PostModule,
+    UserModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),

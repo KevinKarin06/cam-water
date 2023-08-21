@@ -137,7 +137,7 @@ export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export const postFileValidator = () =>
   new ParseFilePipeBuilder()
     .addFileTypeValidator({ fileType: 'image/*' })
-    .addMaxSizeValidator({ maxSize: 5000 })
+    // .addMaxSizeValidator({ maxSize: 50000 })
     .build({
       fileIsRequired: false,
     });

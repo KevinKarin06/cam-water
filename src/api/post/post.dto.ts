@@ -2,13 +2,16 @@ import { IsOptional, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
+  title: string;
+
+  @IsString()
   latitude: string;
 
   @IsString()
   longitude: string;
 
   @IsString()
-  priority: string;
+  gravityLevel: string;
 
   @IsOptional()
   @IsString()

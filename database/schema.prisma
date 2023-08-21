@@ -39,16 +39,26 @@ model EmployeesOnTeams {
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
-  latitude    String
-  longitude   String
-  priority    String
-  description String?  @db.MediumText
-  deviceId    String?
-  status      String?
-  images      Json?    @default("[]")
-  team        Team?    @relation(fields: [teamId], references: [id])
-  teamId      Int?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  title        String
+  latitude     String
+  longitude    String
+  gravityLevel String
+  description  String?  @db.MediumText
+  deviceId     String?
+  status       String?  @default("Pending")
+  images       Json?    @default("[]")
+  team         Team?    @relation(fields: [teamId], references: [id])
+  teamId       Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  deviceId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
