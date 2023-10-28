@@ -10,6 +10,7 @@ import {
 } from 'src/utils/helpers';
 import { CustomLogger } from 'src/utils/logger';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { log } from 'console';
 
 @Injectable()
 export class PostService {
@@ -28,9 +29,10 @@ export class PostService {
 
     const postImages = [];
     try {
+      console.log({ images });
       if (images) {
         for (const file of images) {
-          const filePath = generateFilePath(file.originalname, data.deviceId);
+          const filePath = generateFilePath(file.originalname, 'posts');
           writeFile(filePath, file.buffer, false);
           const publicUrl = generatePublicUrl(filePath);
           postImages.push(publicUrl);
@@ -93,19 +95,19 @@ export class PostService {
     try {
       if (images) {
         for (const file of images) {
-          const filePath = generateFilePath(file.originalname, post.deviceId);
+          const filePath = generateFilePath(file.originalname, 'posts');
           writeFile(filePath, file.buffer, false);
           const publicUrl = generatePublicUrl(filePath);
           postImages.push(publicUrl);
         }
       }
 
-      const uniquImages = new Set([...postImages, ...(post.images as any)]);
+      const uniqueImages = new Set([...postImages, ...(post.images as any)]);
 
       response.data = await this.prismaService.post.update({
         where: { id: post.id },
         data: {
-          images: [...uniquImages],
+          images: [...uniqueImages],
           status: data.status,
           teamId: data.teamId ? +data.teamId : data.teamId,
         },
