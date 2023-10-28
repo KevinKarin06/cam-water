@@ -10,7 +10,6 @@ import {
 } from 'src/utils/helpers';
 import { CustomLogger } from 'src/utils/logger';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { log } from 'console';
 
 @Injectable()
 export class PostService {
@@ -29,7 +28,6 @@ export class PostService {
 
     const postImages = [];
     try {
-      console.log({ images });
       if (images) {
         for (const file of images) {
           const filePath = generateFilePath(file.originalname, 'posts');
