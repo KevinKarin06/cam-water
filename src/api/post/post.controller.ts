@@ -20,7 +20,9 @@ export class PostController {
   constructor(private postService: PostService) {}
 
   @Post('')
-  @UseInterceptors(FilesInterceptor('images', 5))
+  @UseInterceptors(
+    FilesInterceptor('images', 5, { limits: { fieldSize: 25 * 1024 * 1024 } }),
+  )
   async createPost(
     @Body() data: CreatePostDto,
     @Res() res: any,
@@ -37,7 +39,9 @@ export class PostController {
   }
 
   @Post(':id')
-  @UseInterceptors(FilesInterceptor('images', 5))
+  @UseInterceptors(
+    FilesInterceptor('images', 5, { limits: { fieldSize: 25 * 1024 * 1024 } }),
+  )
   async updatePost(
     @Body() data: UpdatePostDto,
     @Res() res: any,
